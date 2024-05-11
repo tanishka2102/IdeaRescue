@@ -169,8 +169,11 @@
                 message: message
             };
 
-            // Set data in Firebase
-            set(ref(db, 'users/' + userData.firstname.replace('.', '_')), userData)
+            // Generate a custom ID based on the user's first name and current timestamp
+            const customID = firstname.toLowerCase().replace(/\s+/g, '-') + '-' + Date.now();
+
+            // Set data in Firebase with the custom ID
+                set(ref(db, 'users/' + customID), userData)
                 .then(() => {
                     alert("Submit Successful!");
                     // Reload the page after successful submission

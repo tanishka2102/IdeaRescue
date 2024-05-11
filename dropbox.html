@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="images/bulb.png">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>IdeaRescue - Dropbox</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dropbox">
+    <div class="wrapper">
+        <nav class="nav">
+            <div class="nav-logo">
+                <p>IdeaRescue</p>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="home.html" class="link">Home</a></li>
+                    <li><a href="#" class="link" active>Drop Box</a></li>
+                    <li><a href="collection.html" class="link">Collection</a></li>
+                    <li><a href="about.html" class="link">About Us</a></li>
+                </ul>
+            </div>
+            <div class="nav-menu-btn">
+                <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+            </div>
+        </nav>
+
+        <!--submit form-->
+        <section class="form-container" id="dropbox">
+            <form id="idea-form" action="#" method="POST">
+                <h1 class="form-header">Submit Your Idea Here</h1>
+                <div class="form">
+                    <div class="form-item form-item1">
+                        <label for="firstname">First Name</label>
+                        <input id="firstname" type="text" name="firstname" />
+                    </div>
+
+                    <div class="form-item form-item1">
+                        <label for="lastname">Last Name</label>
+                        <input id="lastname" type="text" name="lastname" />
+                    </div>
+
+
+                    <div class="form-item form-item3">
+                        <label for="category">Category</label>
+                        <select name="category" id="category">
+                            <option value="Academic">Academic</option>
+                            <option value="Art">Art</option>
+                            <option value="Education">Education</option>
+                            <option value="Sport">Sport</option>
+                            <option value="General">General</option>
+
+                        </select>
+                    </div>
+
+                    <div class="textarea-div form-item4">
+                        <label for="message">Write your Idea</label>
+                        <textarea id="message" type="text" name="message"
+                            placeholder="What's on your mind...write it here..."></textarea>
+                    </div>
+                    <div class="btn-container">
+                        <input id="submit" class="btn btn-glow form-btn" type="submit" name="submit" value="Submit" />
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <footer class="footer-distributed">
+        <div class="footer-left">
+            <h3> IdeaRescue</h3>
+
+            <p class="footer-links">
+                <a href="home.html">Home</a>
+                |
+                <a href="dropbox.html">dropbox</a>
+                |
+                <a href="collection.html">Collection</a>
+                |
+                <a href="about.html">About us</a>
+            </p>
+
+            <p class="footer-company-name">
+                Copyright 2024 <span>&copy;</span> <strong>IDEASRESCUE</strong>
+                All rights reserved
+            </p>
+        </div>
+
+        <div class="footer-center">
+            <div>
+                <i class='bx bxs-map'></i>
+                <p><span>Delhi</span></p>
+            </div>
+            <div>
+                <i class='bx bxs-phone'></i>
+                <p>+91 7054142899</p>
+            </div>
+            <div>
+                <i class='bx bxs-envelope'></i>
+                <p><a href="#">idearescueIT@gmail.com</a></p>
+            </div>
+        </div>
+
+        <div class="footer-right">
+            <p class="footer-company-about">
+                <span>About the company</span>
+                <strong>Motive:</strong> "IdeaRescue is envisioned as a catalyst for innovation, aiming to democratize
+                the process
+                of idea generation and collaboration.IdeaRescue seeks to empower individuals from diverse backgrounds to
+                share, explore,
+                and refine their creative concepts. The project's core motive is to foster a vibrant community
+                where ideas flow freely, sparking inspiration, collaboration, and ultimately driving positive change
+                across various domains."
+            </p>
+            <div class="footer-icons">
+                <a href="#"><i class='bx bxl-facebook'></i></a>
+                <a href="#"><i class='bx bxl-instagram'></i></a>
+                <a href="#"><i class='bx bxl-linkedin'></i></a>
+                <a href="#"><i class='bx bxl-twitter'></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBeL3YtaFQG-AoYOoZOK5P2Buboi9RHcJU",
+            authDomain: "idea-collection.firebaseapp.com",
+            projectId: "idea-collection",
+            storageBucket: "idea-collection.appspot.com",
+            messagingSenderId: "233694210710",
+            appId: "1:233694210710:web:d3c9b159a96569fbdb30b7"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        // Get a reference to the Firebase database service
+        const db = getDatabase(app);
+
+        document.getElementById("idea-form").addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Validate the form
+            const firstname = document.getElementById("firstname").value;
+            const category = document.getElementById("category").value;
+            const message = document.getElementById("message").value;
+
+            if (firstname.trim() === '' || category.trim() === '' || message.trim() === '') {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            // Construct the user data object
+            const userData = {
+                firstname: firstname,
+                lastname: document.getElementById("lastname").value,
+                category: category,
+                message: message
+            };
+
+            // Set data in Firebase
+            set(ref(db, 'users/' + userData.firstname.replace('.', '_')), userData)
+                .then(() => {
+                    alert("Submit Successful!");
+                    // Reload the page after successful submission
+                    location.reload();
+                })
+                .catch((error) => {
+                    console.error("Error adding document: ", error);
+                });
+        });
+
+    </script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>

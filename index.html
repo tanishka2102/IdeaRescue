@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="images/bulb.png">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <title>IT- project</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="wrapper" id="indexp">
+        <nav class="nav">
+            <div class="nav-logo">
+                <p>IdeaRescue</p>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="#" class="link active" id="home">Home</a></li>
+                    <li><a href="#" class="link" id="dropboxLink">Drop Box</a></li>
+                    <li><a href="#" class="link" id="collection">Collection</a></li>
+                    <li><a href="#" class="link" id="about">About Us</a></li>
+                </ul>
+            </div>
+            <div class="nav-button">
+                <button class="btn white-btn" id="loginBtn" onclick="login()">Sign In</button>
+                <button class="btn" id="registerBtn" onclick="register()">Sign Up</button>
+            </div>
+            <div class="nav-menu-btn">
+                <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+            </div>
+        </nav>
+
+        <!-------------------------------- Home Page ----------------------------------------->
+        <div class="home">
+            <h1>“Discover and Give Innovative ideas ”</h1>
+            <p>Rescue your ideas from the depths of uncertainty<br> and breathe life into them with the power of
+                innovation.<br> idea, no matter how hidden or forgotten, holds the potential to transform the world.</p>
+        </div>
+
+
+        <!-------------------------------- Form box ----------------------------------------->
+        <div class="form-box">
+
+            <!------------------ Login form --------------->
+            <!-- Sign-in form -->
+            <div class="login-container" id="login">
+                <div class="top">
+                    <span>Don't have an account? <a href="#" onclick="register()">Sign Up</a></span>
+                    <div class="cut-btn">
+                        <i class='bx bx-x' onclick="closeForm('')"></i>
+                    </div>
+                    <header>Login</header>
+                </div>
+                <div class="input-box">
+                    <input type="email" class="input-field" placeholder="Email" id="loginEmail">
+                    <i class="bx bx-user"></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" class="input-field" placeholder="Password" id="loginPassword">
+                    <i class="bx bx-lock-alt"></i>
+                </div>
+                <div class="input-box">
+                    <button class="submit" id="loginSubmit">Sign In</button>
+                </div>
+                <div class="two-col">
+                    <div class="one">
+                        <input type="checkbox" id="login-check">
+                        <label for="login-check">Remember Me</label>
+                    </div>
+                    <div class="two">
+                        <label><a href="#" id="forgotPasswordLink">Forgot password?</a></label>
+                    </div>
+                </div>
+            </div>
+
+            <!------------------ registeration form --------------->
+            <div class="register-container" id="register">
+                <div class="top">
+                    <span>Have an account?<a href="#" onclick="login()">Login</a></span>
+                    <div class="cut-btn">
+                        <i class='bx bx-x' onclick="closeForm('')"></i>
+                    </div>
+                    <header>Sign up</header>
+                </div>
+                <div class="two-forms">
+                    <div class="input-box">
+                        <input type="text" class="input-field" placeholder="Firstname" id="firstname">
+                        <i class="bx bx-user"></i>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" class="input-field" placeholder="Lastname" id="lastname">
+                        <i class="bx bx-user"></i>
+                    </div>
+                </div>
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Email" id="email">
+                    <i class="bx bx-envelope"></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" class="input-field" placeholder="password" id="pass">
+                    <i class="bx bx-lock-alt"></i>
+                </div>
+                <div class="input-box">
+                    <input type="submit" class="submit" value="Register" id="submit">
+                </div>
+                <div class="two-col">
+                    <div class="one">
+                        <input type="checkbox" id="register-check">
+                        <label for="register-check">Remember Me</label>
+                    </div>
+                    <div class="two">
+                        <label><a href="#">Terms & conditions</a></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+</body>
+
+</html>
+
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+
+    // Your Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCtMMKmHY1lWBJ1QusszEy0lUDpSQrMFGk",
+        authDomain: "new-project-8b534.firebaseapp.com",
+        databaseURL: "https://new-project-8b534-default-rtdb.firebaseio.com",
+        projectId: "new-project-8b534",
+        storageBucket: "new-project-8b534.appspot.com",
+        messagingSenderId: "1081477129023",
+        appId: "1:1081477129023:web:f78781b41ac8e10aa4e98a"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+    // Get Firebase Auth instance
+    const auth = getAuth(app);
+
+    // Get a reference to the Firebase database service
+    const db = getDatabase(app);
+
+    function forgotPassword() {
+        const email = document.getElementById("loginEmail").value;
+
+        sendPasswordResetEmail(auth, email)
+            .then(() => {
+                alert("Password reset email sent. Please check your email.");
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert(errorMessage);
+            });
+    }
+
+
+    document.getElementById("submit").addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("pass").value;
+        const firstname = document.getElementById("firstname").value;
+        const lastname = document.getElementById("lastname").value;
+
+        // Create user with email and password
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // User created, now update user profile with first name and last name
+                const user = userCredential.user;
+                updateProfile(user, {
+                    displayName: `${firstname} ${lastname}`
+                }).then(() => {
+                    // Update successful
+                    alert("Signup Successful!");
+                    // Redirect or show the pages here
+                    window.location.href = "home.html";
+                }).catch((error) => {
+                    console.error("Error updating profile: ", error);
+                });
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert(errorMessage);
+            });
+    });
+
+    document.getElementById("loginSubmit").addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const email = document.getElementById("loginEmail").value;
+        const password = document.getElementById("loginPassword").value;
+
+        // Sign in user with email and password
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                alert("Sign In Successful!");
+                // Redirect or show the pages here
+                window.location.href = "home.html";
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert(errorMessage);
+            });
+    });
+
+    document.getElementById("forgotPasswordLink").addEventListener('click', function (e) {
+        e.preventDefault();
+        forgotPassword();
+    });
+
+
+</script>
+
+
+<script src="script.js"></script>
